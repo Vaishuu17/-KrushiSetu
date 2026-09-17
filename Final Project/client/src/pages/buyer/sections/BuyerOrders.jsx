@@ -80,13 +80,13 @@ export default function BuyerOrders({ toast }) {
 
       // 3. If demo mode (no real Razorpay keys) — use simulated flow
       if (demoMode || !window.Razorpay) {
-        // Show demo payment modal instead
+        // Show demo payment modal instead with direct link option
         const proceed = window.confirm(
-          `🔒 DEMO PAYMENT GATEWAY\n\n` +
+          `🔒 SECURE ESCROW PAYMENT\n\n` +
           `Order: ${order.orderId}\n` +
           `Product: ${order.productName}\n` +
           `Amount: ₹${amount.toLocaleString()}\n\n` +
-          `(In production, Razorpay real payment UI opens here with UPI, Cards, Net Banking)\n\n` +
+          `Direct Razorpay Link: https://rzp.io/rzp/eMuqtymy\n\n` +
           `Click OK to simulate successful payment & lock funds in escrow.`
         );
         if (!proceed) return;
@@ -317,17 +317,28 @@ export default function BuyerOrders({ toast }) {
               </button>
 
               {o.status === 'accepted' && (
-                <button
-                  className="btn btn-green btn-sm"
-                  style={{ flex: 1, fontWeight: 800, padding: '.75rem 1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '.6rem', fontSize: '.9rem', borderRadius: '10px' }}
-                  onClick={() => payToEscrow(o)}
-                >
-                  <span style={{ fontSize: '1.1rem' }}>🔒</span>
-                  <span>Pay ₹{finalPayable.toLocaleString()} — Secure in Escrow</span>
-                  <span style={{ background: 'rgba(255,255,255,0.25)', padding: '.15rem .45rem', borderRadius: '4px', fontSize: '.72rem', fontWeight: 700, letterSpacing: '.02em' }}>
-                    UPI · Card · NetBanking
-                  </span>
-                </button>
+                <>
+                  <button
+                    className="btn btn-green btn-sm"
+                    style={{ flex: 1, fontWeight: 800, padding: '.75rem 1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '.6rem', fontSize: '.9rem', borderRadius: '10px' }}
+                    onClick={() => payToEscrow(o)}
+                  >
+                    <span style={{ fontSize: '1.1rem' }}>🔒</span>
+                    <span>Pay ₹{finalPayable.toLocaleString()} — Secure in Escrow</span>
+                    <span style={{ background: 'rgba(255,255,255,0.25)', padding: '.15rem .45rem', borderRadius: '4px', fontSize: '.72rem', fontWeight: 700, letterSpacing: '.02em' }}>
+                      UPI · Card · NetBanking
+                    </span>
+                  </button>
+                  <a
+                    href="https://rzp.io/rzp/eMuqtymy"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn btn-sm"
+                    style={{ background: '#0284C7', color: '#fff', fontWeight: 800, padding: '.75rem 1rem', textDecoration: 'none', borderRadius: '10px', display: 'inline-flex', alignItems: 'center', gap: '.4rem' }}
+                  >
+                    💳 Direct Razorpay Link
+                  </a>
+                </>
               )}
               {o.status === 'unload-pending' && !esc.buyerConfirmedReceived && (
                 <button className="btn btn-green btn-sm" style={{ flex: 1, fontWeight: 800, padding: '.65rem' }} onClick={() => confirmReceived(o._id)}>
