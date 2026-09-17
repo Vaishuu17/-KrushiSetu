@@ -1,0 +1,23 @@
+{
+  "name": "krushisetu-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "KrushiSetu — Direct Farmer-to-Buyer Linkage & Dynamic Price Discovery Platform",
+  "scripts": {
+    "build": "cd \"Final Project/client\" && npm install && npm run build",
+    "start": "cd \"Final Project/server\" && node index.js",
+    "dev": "cd \"Final Project/client\" && npm run dev",
+    "server": "cd \"Final Project/server\" && npm run dev"
+  },
+  "keywords": [
+    "agriculture",
+    "krushisetu",
+    "sih2026",
+    "react",
+    "node",
+    "express",
+    "mongodb"
+  ],
+  "author": "AI Innovators",
+  "license": "MIT"
+}
