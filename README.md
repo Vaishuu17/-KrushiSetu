@@ -5,6 +5,9 @@
 [![License](https://img.shields.io/badge/License-MIT-orange?style=for-the-badge)](LICENSE)
 [![Status](https://img.shields.io/badge/Status-Production%20Ready-success?style=for-the-badge)]()
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Vaishuu17/-KrushiSetu)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Vaishuu17/-KrushiSetu)
+
 > **Eliminating Middlemen, Eliminating Hidden Fees.**  
 > *KrushiSetu* is a next-generation agricultural marketplace that empowers farmers with **Net Realization Score (NRS)** price discovery, **Razorpay Escrow Protection**, **Dynamic Commission Engine**, **Zomato-style Real-time Delivery Radar**, and **Multilingual AI Voice Assistance**.
 
