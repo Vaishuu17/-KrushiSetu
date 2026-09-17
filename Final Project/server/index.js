@@ -64,4 +64,8 @@ function startServer(port, maxRetries = 10) {
   });
 }
 
-startServer(PREFERRED_PORT);
+if (require.main === module) {
+  startServer(PREFERRED_PORT);
+}
+
+module.exports = app;
