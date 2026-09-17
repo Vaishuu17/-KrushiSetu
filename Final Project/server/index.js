@@ -35,12 +35,16 @@ app.use('/api/payment', require('./routes/payment'));
 
 const autoSeed = require('./seed');
 
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log('✅ MongoDB connected');
-    autoSeed();
-  })
-  .catch((err) => console.error('MongoDB error:', err));
+if (process.env.MONGO_URI) {
+  mongoose.connect(process.env.MONGO_URI)
+    .then(() => {
+      console.log('✅ MongoDB connected');
+      autoSeed();
+    })
+    .catch((err) => console.error('MongoDB error:', err.message));
+} else {
+  console.warn('⚠️ MONGO_URI is not set in environment variables');
+}
 
 app.get('/', (req, res) => res.send('🌾 KrushiSetu API Running'));
 
@@ -48,9 +52,13 @@ app.get('/', (req, res) => res.send('🌾 KrushiSetu API Running'));
 function startServer(port, maxRetries = 10) {
   const server = app.listen(port, () => {
     console.log(`🚀 Server running on http://localhost:${port}`);
-    // Write active port to a file so client can read it
-    const portFile = path.join(__dirname, '..', '.active_port');
-    fs.writeFileSync(portFile, String(port));
+    try {
+      // Write active port to a file so client can read it
+      const portFile = path.join(__dirname, '..', '.active_port');
+      fs.writeFileSync(portFile, String(port));
+    } catch (e) {
+      // Ignore file system write errors on cloud hosting
+    }
   });
 
   server.on('error', (err) => {
