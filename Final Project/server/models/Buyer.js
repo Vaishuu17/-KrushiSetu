@@ -6,12 +6,31 @@ const buyerSchema = new mongoose.Schema({
   name: { type: String, required: true },
   phone: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  businessName: { type: String },
-  businessType: { type: String }, // Retailer, Wholesaler, Restaurant, Exporter, Processor
-  state: { type: String },
-  district: { type: String },
-  loc: { type: String },
-  gstNumber: { type: String },
+  businessName: { type: String, default: 'Agri Business' },
+  buyerType: { 
+    type: String, 
+    enum: ['Bulk Buyer', 'Wholesaler', 'Retailer', 'Institutional Buyer'],
+    default: 'Wholesaler'
+  },
+  contactPerson: { type: String },
+  businessCategory: { type: String, default: 'Fruits & Vegetables' },
+  state: { type: String, default: 'Maharashtra' },
+  district: { type: String, default: 'Mumbai' },
+  loc: { type: String, default: 'Vashi APMC, Navi Mumbai' },
+  deliveryLocations: { type: [String], default: ['Vashi APMC', 'Pune Market Yard'] },
+  requiredCrops: { type: [String], default: ['Tomato', 'Onion', 'Potato'] },
+  preferredPriceRange: { type: String, default: 'Market Standard' },
+  paymentPreference: { type: String, default: 'Platform Escrow (Direct Bank/UPI)' },
+  gstNumber: { type: String, default: '27AAACR1234F1Z5' },
+  verificationStatus: { 
+    type: String, 
+    enum: ['Verified', 'Pending Verification', 'Not Verified'],
+    default: 'Verified'
+  },
+  rating: { type: Number, default: 4.8 },
+  totalOrders: { type: Number, default: 0 },
+  completedOrders: { type: Number, default: 0 },
+  language: { type: String, default: 'en' },
   status: { type: String, default: 'Active' },
   createdAt: { type: Date, default: Date.now },
 });

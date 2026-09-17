@@ -26,7 +26,12 @@ app.use('/api/chatai', require('./routes/chatai'));
 app.use('/api/prices', require('./routes/prices'));
 app.use('/api/weather', require('./routes/weather'));
 app.use('/api/orders', require('./routes/orders'));
+app.use('/api/requirements', require('./routes/requirements'));
+app.use('/api/config', require('./routes/platformConfig'));
+app.use('/api/buyers', require('./routes/buyers'));
 app.use('/api/shared-trips', require('./routes/sharedTrips'));
+app.use('/api/loans', require('./routes/loans'));
+app.use('/api/payment', require('./routes/payment'));
 
 const autoSeed = require('./seed');
 
@@ -37,7 +42,7 @@ mongoose.connect(process.env.MONGO_URI)
   })
   .catch((err) => console.error('MongoDB error:', err));
 
-app.get('/', (req, res) => res.send('🌾 KrushiMitra API Running'));
+app.get('/', (req, res) => res.send('🌾 KrushiSetu API Running'));
 
 // Dynamic port — try preferred port, if busy try next ones
 function startServer(port, maxRetries = 10) {

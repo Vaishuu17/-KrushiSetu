@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import LanguageSelector from '../components/LanguageSelector';
 import API from '../api/axios';
 
 const districtMap = {
@@ -212,16 +213,17 @@ export default function Register() {
     <div className="page active" id="page-register">
       {toastMsg && <div className="toast show">{toastMsg}</div>}
       <nav className="nav">
-        <div className="nav-logo">🌾 <span>Krushi</span>Mitra AI</div>
-        <div className="nav-links">
-          <a onClick={() => navigate('/')} style={{color:'#c8e6c9',cursor:'pointer'}}>← Back to Home</a>
+        <div className="nav-logo" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>🌾 <span>KrushiSetu</span></div>
+        <div className="nav-links" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <LanguageSelector />
+          <a onClick={() => navigate('/')} style={{ color: '#c8e6c9', cursor: 'pointer' }}>← Back to Home</a>
         </div>
       </nav>
 
       <div className="reg-page">
         <div className="reg-box">
           <div className="reg-header">
-            <div className="reg-logo">🌾 <span>Krushi</span>Mitra AI</div>
+            <div className="reg-logo">🌾 <span>KrushiSetu</span></div>
             <div style={{fontSize:'.82rem',color:'#a5d6a7',marginTop:'.2rem'}}>Kisan se Bazaar tak – Sab kuch ek Setu par</div>
             <div className="reg-toggle">
               <button className={mode==='signup'?'active':''} onClick={() => setMode('signup')}>📝 Sign Up</button>
@@ -494,8 +496,11 @@ export default function Register() {
                     <button className="reg-eye" type="button" onClick={() => togglePass('flp')}>{showPass.flp?'🙈':'👁️'}</button>
                     {flErr.password && <div className="reg-err" style={{display:'block'}}>{flErr.password}</div>}
                   </div>
-                  <div style={{background:'#E8F5E9',borderRadius:'10px',padding:'.75rem',marginBottom:'.75rem',fontSize:'.8rem',color:'var(--primary-dark)'}}>
-                    💡 <b>Demo:</b> Enter any 10-digit mobile + any password (6+ chars) to login as farmer.
+                  <div style={{background:'#E8F5E9',borderRadius:'10px',padding:'.75rem',marginBottom:'.75rem',fontSize:'.8rem',color:'var(--primary-dark)',display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:'.5rem'}}>
+                    <div>💡 <b>Demo:</b> 9876543210 / kisan123</div>
+                    <button type="button" onClick={() => setFl({ phone: '9876543210', password: 'kisan123' })} style={{ background: '#2E7D32', color: '#fff', border: 'none', padding: '.25rem .6rem', borderRadius: '4px', fontSize: '.72rem', fontWeight: 700, cursor: 'pointer' }}>
+                      ⚡ Auto-Fill
+                    </button>
                   </div>
                   <button className="reg-submit" onClick={farmerLoginFn} disabled={loading}>
                     {loading ? '⏳ Logging in...' : '🌾 Login to Dashboard'}
@@ -516,6 +521,12 @@ export default function Register() {
                     <button className="reg-eye" type="button" onClick={() => togglePass('blp')}>{showPass.blp?'🙈':'👁️'}</button>
                     {blErr.password && <div className="reg-err" style={{display:'block'}}>{blErr.password}</div>}
                   </div>
+                  <div style={{background:'#E3F2FD',borderRadius:'10px',padding:'.75rem',marginBottom:'.75rem',fontSize:'.8rem',color:'#0D47A1',display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:'.5rem'}}>
+                    <div>💡 <b>Demo Buyer:</b> 9988776655 / buyer123</div>
+                    <button type="button" onClick={() => setBl({ phone: '9988776655', password: 'buyer123' })} style={{ background: '#1565C0', color: '#fff', border: 'none', padding: '.25rem .6rem', borderRadius: '4px', fontSize: '.72rem', fontWeight: 700, cursor: 'pointer' }}>
+                      ⚡ Auto-Fill
+                    </button>
+                  </div>
                   <button className="reg-submit" onClick={buyerLoginFn} disabled={loading} style={{background:'#1565C0'}}>
                     {loading ? '⏳ Logging in...' : '🛒 Login as Buyer'}
                   </button>
@@ -535,8 +546,11 @@ export default function Register() {
                     <button className="reg-eye" type="button" onClick={() => togglePass('alp')}>{showPass.alp?'🙈':'👁️'}</button>
                     {alErr.password && <div className="reg-err" style={{display:'block'}}>{alErr.password}</div>}
                   </div>
-                  <div style={{background:'rgba(46,125,50,.07)',borderRadius:'10px',padding:'.75rem',marginBottom:'.75rem',fontSize:'.8rem',color:'var(--primary-dark)'}}>
-                    🔑 <b>Demo:</b> Username: <b>yash</b> | Password: <b>yash@123</b>
+                  <div style={{background:'rgba(46,125,50,.07)',borderRadius:'10px',padding:'.75rem',marginBottom:'.75rem',fontSize:'.8rem',color:'var(--primary-dark)',display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:'.5rem'}}>
+                    <div>🔑 <b>Demo Admin:</b> yash / yash@123</div>
+                    <button type="button" onClick={() => setAl({ username: 'yash', password: 'yash@123' })} style={{ background: '#1B5E20', color: '#fff', border: 'none', padding: '.25rem .6rem', borderRadius: '4px', fontSize: '.72rem', fontWeight: 700, cursor: 'pointer' }}>
+                      ⚡ Auto-Fill
+                    </button>
                   </div>
                   <button className="reg-submit" onClick={adminLoginFn} disabled={loading} style={{background:'#1a1a2e'}}>
                     {loading ? '⏳ Logging in...' : '🔐 Access Admin Panel'}

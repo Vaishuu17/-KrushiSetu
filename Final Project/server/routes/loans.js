@@ -110,6 +110,14 @@ router.post('/generate-cibil', (req, res) => {
   });
 });
 
+// ── Global interest rate (stored in memory for simplicity) ──
+let interestRate = 7;
+router.get('/rate', (req, res) => res.json({ rate: interestRate }));
+router.put('/rate', (req, res) => {
+  interestRate = parseFloat(req.body.rate) || 7;
+  res.json({ rate: interestRate });
+});
+
 // ── Submit loan application (with all KYC data) ──
 router.post('/', async (req, res) => {
   try {
@@ -133,14 +141,6 @@ router.put('/:id/verify', async (req, res) => {
     const l = await Loan.findByIdAndUpdate(req.params.id, { status, adminRemarks }, { new: true });
     res.json(l);
   } catch (e) { res.status(500).json({ message: e.message }); }
-});
-
-// ── Global interest rate (stored in memory for simplicity) ──
-let interestRate = 7;
-router.get('/rate', (req, res) => res.json({ rate: interestRate }));
-router.put('/rate', (req, res) => {
-  interestRate = parseFloat(req.body.rate) || 7;
-  res.json({ rate: interestRate });
 });
 
 module.exports = router;

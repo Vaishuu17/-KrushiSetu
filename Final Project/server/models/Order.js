@@ -35,6 +35,23 @@ const orderSchema = new mongoose.Schema({
     bookingId: String,
   },
 
+  // Financial & Centralized Commission Breakdown Snapshot
+  cropCategory: { type: String, default: 'Vegetables' },
+  subtotal: { type: Number },
+  buyerType: { 
+    type: String, 
+    enum: ['Bulk Buyer', 'Wholesaler', 'Retailer', 'Institutional Buyer'],
+    default: 'Wholesaler'
+  },
+  buyerCommissionPct: { type: Number, default: 1.5 },
+  buyerCommissionAmount: { type: Number, default: 0 },
+  farmerOrderNumber: { type: Number, default: 1 },
+  farmerCommissionPct: { type: Number, default: 0.0 }, // 0% on 1st order, 2% thereafter
+  farmerCommissionAmount: { type: Number, default: 0 },
+  farmerNetAmount: { type: Number },                   // What farmer actually receives
+  buyerTotalAmount: { type: Number },                  // Total amount paid by buyer
+  platformCommissionRevenue: { type: Number, default: 0 }, // Total commission earned by platform
+
   // ===== ESCROW SYSTEM =====
   escrow: {
     // held → payment-confirmed → awaiting-unload → released / disputed / refunded
@@ -62,6 +79,18 @@ const orderSchema = new mongoose.Schema({
     disputedAt: { type: Date },
     resolvedAt: { type: Date },
     resolvedAction: { type: String },
+  },
+
+  // ===== RAZORPAY PAYMENT DETAILS =====
+  paymentDetails: {
+    rzpOrderId:   { type: String },   // Razorpay order id (order_xxx)
+    rzpPaymentId: { type: String },   // Razorpay payment id (pay_xxx)
+    rzpSignature: { type: String },   // Razorpay signature for verification
+    amountPaise:  { type: Number },   // Amount in paise (INR × 100)
+    currency:     { type: String, default: 'INR' },
+    status:       { type: String, enum: ['created', 'captured', 'failed', 'refunded'] },
+    paidAt:       { type: Date },
+    isDemoMode:   { type: Boolean, default: false },
   },
 
   createdAt: { type: Date, default: Date.now },
